@@ -1,0 +1,101 @@
+/* --------------- Testimonials --------------- */
+
+.testimonials-sa{
+    position: relative;
+    overflow: hidden;
+
+    &:after{
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url(../imgs/testim/mesh-gradient.png);
+        background-position: bottom;
+        background-size: contain;
+        background-repeat: no-repeat;
+        pointer-events: none;
+        opacity: .5;
+        z-index: 2;
+    }
+
+    .gl-rate{
+        width: max-content;
+        border: 1px solid rgba(255,255,255,.1);
+        border-radius: 60px;
+        padding: 10px 20px;
+
+        .icon{
+            width: 35px;
+        }
+
+        .cont{
+            padding-left: 30px;
+
+            h6{
+                line-height: 1;
+                font-weight: 600;
+                font-size: 18px;
+            }
+
+            .stars{
+                font-size: 13px;
+                color: #EF2B10;
+                margin-left: 10px;
+            }
+
+            p{
+                font-size: 12px;
+                opacity: .7;
+                margin-top: 2px;
+            }
+        }
+    }
+
+    .swiper-slide{
+        height: auto;
+    }
+
+    .item{
+        background: $bg-color;
+        padding: 40px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+
+        .rate{
+
+            h5{
+                font-size: 16px;
+            }
+
+            .stars{
+                font-size: 13px;
+                color: #EF2B10;
+                margin-left: 10px;
+            }
+        }
+
+        .info{
+
+            .img-author{
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                overflow: hidden;
+            }
+
+            .info-text{
+                padding-left: 15px;
+
+                p{
+                    font-size: 14px;
+                    opacity: .7;
+                }
+            }
+        }
+    }
+}
