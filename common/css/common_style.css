@@ -2476,7 +2476,16 @@ img.left {
   .justify-end {
     -webkit-box-pack: start !important;
     -ms-flex-pack: start !important;
-    justify-content: flex-start !important; } }
+    justify-content: flex-start !important; }
+  .load-text span {
+        font-size: 16px !important; } }
+
+@media screen and (max-width: 444px) {
+  .load-text span {
+        font-size: 13px !important;
+        margin: 0 2px !important;
+        letter-spacing: -1px !important; }
+}
 
 @media (min-width: 992px) {
     .menu-icon {
