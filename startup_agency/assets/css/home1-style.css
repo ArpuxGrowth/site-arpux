@@ -814,6 +814,13 @@ p {
   .contact-sa .box {
     padding: 120px 40px; } }
 
+@media screen and (max-width: 674px) {
+  #service-text {
+    font-size: 1.75rem;
+    letter-spacing: -1;
+  }
+}
+
 @media screen and (max-width: 560px) {
     .sec-head {
         flex-direction: column !important; /* Faz com que os elementos fiquem em coluna */
@@ -826,18 +833,15 @@ p {
     }
 }
 
-@media screen and (max-width: 431px) {
-  #responsive-img {
-      content: url("../imgs/about-small.jpg");
-  }
-}
-
-@media (max-width: 426px) {
+@media (max-width: 545px) {
   #responsive-service {
       content: url('../imgs/services/4-small.png');
   }
-  #service-text {
-    letter-spacing: 1px;
+}
+
+@media screen and (max-width: 431px) {
+  #responsive-img {
+      content: url("../imgs/about-small.jpg");
   }
 }
 
