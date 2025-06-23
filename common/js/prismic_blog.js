@@ -1,4 +1,4 @@
-const repo = 'sarpuxblog.prismic.io'
+const repo = 'arpuxblog.prismic.io'
 
 // 1) Pega o JSON do /api/v2 para descobrir a ref atual
 async function getRef() {
@@ -21,11 +21,14 @@ async function fetchPosts(ref) {
 function render(posts) {
     const container = document.getElementById('blog-posts')
     posts.forEach(doc => {
-    const title = doc.data.title[0].text
+    console.log('Dados do documento:', doc.data);
+    
+    const slug = doc.uid
+    const title = doc.data.title[0].text || 'Título não encontrado.'
+    const description = doc.data.description[0].text.slice(0, 320) + '…'
+    const tag = doc.data.tag[0].text
+    const imgUrl = doc.data.cover_image?.url
     const date  = new Date(doc.data.date).toLocaleDateString('pt-BR')
-    const excerpt = doc.data.description[0].text.slice(0, 320) + '…'
-    const content = doc.data.content
-    const imgUrl = doc.data.cover_image.url
 
     const item = document.createElement('div')
     item.className = 'item mb-80'
@@ -53,14 +56,14 @@ function render(posts) {
         </div>
         <div class="cont mt-30">
             <span class="sub-color fz-14 text-u mb-15">
-                <a href="#0"><i class="fa-solid fa-tag mr-10 opacity-7"></i> Vendas</a>
+                <a href="#0"><i class="fa-solid fa-tag mr-10 opacity-7"></i> ${tag}</a>
             </span>
             <h3>
-                <a href="blog/secretaria-ou-pacientes.html">${title}</a>
+                <a href="blog/post.html?uid=${slug}">${title}</a>
             </h3>
             <div class="text mt-25">
-                <a href="blog/secretaria-ou-pacientes.html">
-                    <p>${excerpt}</p>
+                <a href="blog/post.html?uid=${slug}">
+                    <p>${description}</p>
                 </a>
             </div>
         </div>
@@ -76,6 +79,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const posts = await fetchPosts(ref)
     render(posts)
     } catch (e) {
-    console.error(e)
+    console.error('Erro ao carregar lista de posts:', e)
     }
 })
