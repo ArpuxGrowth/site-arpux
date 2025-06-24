@@ -1,24 +1,4 @@
 {
-  "redirects": [
-    { "source": "/programa-de-aceleracao/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/dr-percy-clinica-2/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/case_amazon/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/tendencias_do_ecommerce_no_brasil/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/author/arpux/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/health-business-program/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/category/uncategorized/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/sample-page/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/dr-percy-clinica/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/10-12-2024/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/inner_pages/about.html?", "statusCode": 410, "destination": "/404" },
-    { "source": "/arthur/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/elementor-5571/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/indiqueeganhe/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/2024/11/15/hello-world/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/trafego-plus/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/elementor-5046/?", "statusCode": 410, "destination": "/404" },
-    { "source": "/branding/?", "statusCode": 410, "destination": "/404" }
-  ],
   "rewrites": [
     {
       "source": "/blog/:slug",
