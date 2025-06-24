@@ -150,22 +150,27 @@ function renderContent(contentArray) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. pega o uid da query-string
-    const params = new URLSearchParams(window.location.search);
-    const uid    = params.get('uid');
-    if (!uid) {
-    return document.getElementById('content-1').textContent = 'Post não encontrado.';
-    }
+  // 1. pega o slug da URL “amigável” /blog/slug-do-post
+  //    ex.: '/blog/como-a-ia-pode-ajudar-seu-consultorio-a-crescer'
+  const pathParts = window.location.pathname.split('/');
+  // em pathParts = ["", "blog", "slug-do-post"] pegamos a última parte
+  const uid = pathParts[pathParts.length - 1] || '';
+  if (!uid) {
+    const target = document.getElementById('content-1');
+    if (target) target.textContent = 'Post não encontrado.';
+    return;
+  }
 
-    try {
+  try {
     // 2. busca a ref + o post
     const ref = await getRef();
     const doc = await fetchPostByUID(ref, uid);
     if (!doc) throw new Error('Documento não retornado');
     // 3. renderiza
     renderPost(doc);
-    } catch (e) {
+  } catch (e) {
     console.error('Erro ao carregar post:', e);
-    document.getElementById('content-1').textContent = 'Erro ao carregar post.';
-    }
+    const target = document.getElementById('content-1');
+    if (target) target.textContent = 'Erro ao carregar post.';
+  }
 });

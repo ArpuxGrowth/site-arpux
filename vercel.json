@@ -18,5 +18,11 @@
     { "src": "/trafego-plus/?", "status": 410 },
     { "src": "/elementor-5046/?", "status": 410 },
     { "src": "/branding/?", "status": 410 }
+  ],
+  "rewrites": [
+    {
+      "source": "/blog/:slug",
+      "destination": "/blog/post.html?uid=:slug"
+    }
   ]
 }
