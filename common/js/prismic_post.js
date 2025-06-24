@@ -23,16 +23,21 @@ function renderPost(doc) {
     const tag = data.tag[0].text
     const date = new Date(data.date).toLocaleDateString('pt-BR');
     const dateText = data.text_date[0].text;
-    const coverImg = data.cover_img?.url;
-    const content = data.content;
+    const coverImg = data.cover_image?.url;
+    console.log("Imagem de capa:", coverImg);
+    const image_1 = data.image_01?.url;
+    const image_2 = data.image_02?.url;
+    const content_1 = data.content_1;
+    console.log("Imagem 1:", image_1);
+    const content_2 = data.content_2;
 
-    // define o title da página
+    // define o 'title' da página
     document.title = title + ' | Blog Arpux';
 
     const header = document.getElementById('article-header')
 
     header.innerHTML = `
-        <div class="container-xl bg-img mt-80" data-background="${coverImg}" data-overlay-dark="4">
+        <div class="container-xl bg-img mt-80" style="background-image:url('${coverImg}');" data-overlay-dark="4">
             <div class="row">
                 <div class="col-lg-10">
                     <div class="caption">
@@ -71,31 +76,96 @@ function renderPost(doc) {
         </div>
     `
 
-    const article = document.getElementById('article')
+function renderContent(contentArray) {
+  let html = '';
+  let inList = false;
 
-    article.innerHTML = `
-        
+  for (const block of contentArray) {
+    switch (block.type) {
+      case 'list-item':
+        // se ainda não abrimos a lista, abra agora
+        if (!inList) {
+          html += '<ul class="rest unorder-list mb-30">';
+          inList = true;
+        }
+        html += `<li>${block.text}</li>`;
+        break;
+
+      default:
+        // se estivermos dentro de uma lista, feche antes de sair dela
+        if (inList) {
+          html += '</ul>';
+          inList = false;
+        }
+
+        // renderiza demais tipos
+        if (block.type === 'paragraph') {
+          html += `<p class="text mb-20">${block.text}</p>`;
+        } else if (block.type.startsWith('heading')) {
+          // pega o número do heading dinamicamente
+          const level = block.type.slice(-1);
+          html += `<h${level} class="title mb-30">${block.text}</h${level}>`;
+        } else if (block.type === 'image') {
+          html += `<img src="${block.url}" alt="${block.alt}">`;
+        }
+        break;
+    }
+  }
+
+  // se terminou ainda dentro de <ul>, feche
+  if (inList) {
+    html += '</ul>';
+  }
+
+  return html;
+}
+
+    const articleContent_1 = document.getElementById('content-1')
+    articleContent_1.innerHTML = renderContent(content_1);
+
+    const articleImg = document.getElementById('content-image')
+    articleImg.innerHTML = `
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="iner-img sm-mb30">
+                    <img src=${image_1} alt="">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="iner-img">
+                    <img src=${image_2} alt="">
+                </div>
+            </div>
+        </div>
+    `
+
+    const articleContent_2 = document.getElementById('content-2')
+    articleContent_2.innerHTML = renderContent(content_2);
+
+    const articleTag = document.getElementById('article-tag');
+    articleTag.innerHTML = `
+        <a href="#">${tag}</a>
     `
 
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1) pega o uid da query-string
+    // 1. pega o uid da query-string
     const params = new URLSearchParams(window.location.search);
     const uid    = params.get('uid');
     if (!uid) {
-    return document.getElementById('post-content').textContent = 'Post não encontrado.';
+    return document.getElementById('content-1').textContent = 'Post não encontrado.';
     }
 
     try {
-    // 2) busca a ref + o post
+    // 2. busca a ref + o post
     const ref = await getRef();
     const doc = await fetchPostByUID(ref, uid);
     if (!doc) throw new Error('Documento não retornado');
-    // 3) renderiza
+    // 3. renderiza
     renderPost(doc);
     } catch (e) {
     console.error('Erro ao carregar post:', e);
-    document.getElementById('post-content').textContent = 'Erro ao carregar post.';
+    document.getElementById('content-1').textContent = 'Erro ao carregar post.';
     }
 });
