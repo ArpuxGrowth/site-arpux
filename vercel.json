@@ -1,23 +1,23 @@
 {
-  "routes": [
-    { "src": "/programa-de-aceleracao/?", "status": 410 },
-    { "src": "/dr-percy-clinica-2/?", "status": 410 },
-    { "src": "/case_amazon/?", "status": 410 },
-    { "src": "/tendencias_do_ecommerce_no_brasil/?", "status": 410 },
-    { "src": "/author/arpux/?", "status": 410 },
-    { "src": "/health-business-program/?", "status": 410 },
-    { "src": "/category/uncategorized/?", "status": 410 },
-    { "src": "/sample-page/?", "status": 410 },
-    { "src": "/dr-percy-clinica/?", "status": 410 },
-    { "src": "/10-12-2024/?", "status": 410 },
-    { "src": "/inner_pages/about.html?", "status": 410 },
-    { "src": "/arthur/?", "status": 410 },
-    { "src": "/elementor-5571/?", "status": 410 },
-    { "src": "/indiqueeganhe/?", "status": 410 },
-    { "src": "/2024/11/15/hello-world/?", "status": 410 },
-    { "src": "/trafego-plus/?", "status": 410 },
-    { "src": "/elementor-5046/?", "status": 410 },
-    { "src": "/branding/?", "status": 410 }
+  "redirects": [
+    { "source": "/programa-de-aceleracao/?", "status": 410, "destination": "/404" },
+    { "source": "/dr-percy-clinica-2/?", "status": 410, "destination": "/404" },
+    { "source": "/case_amazon/?", "status": 410, "destination": "/404" },
+    { "source": "/tendencias_do_ecommerce_no_brasil/?", "status": 410, "destination": "/404" },
+    { "source": "/author/arpux/?", "status": 410, "destination": "/404" },
+    { "source": "/health-business-program/?", "status": 410, "destination": "/404" },
+    { "source": "/category/uncategorized/?", "status": 410, "destination": "/404" },
+    { "source": "/sample-page/?", "status": 410, "destination": "/404" },
+    { "source": "/dr-percy-clinica/?", "status": 410, "destination": "/404" },
+    { "source": "/10-12-2024/?", "status": 410, "destination": "/404" },
+    { "source": "/inner_pages/about.html?", "status": 410, "destination": "/404" },
+    { "source": "/arthur/?", "status": 410, "destination": "/404" },
+    { "source": "/elementor-5571/?", "status": 410, "destination": "/404" },
+    { "source": "/indiqueeganhe/?", "status": 410, "destination": "/404" },
+    { "source": "/2024/11/15/hello-world/?", "status": 410, "destination": "/404" },
+    { "source": "/trafego-plus/?", "status": 410, "destination": "/404" },
+    { "source": "/elementor-5046/?", "status": 410, "destination": "/404" },
+    { "source": "/branding/?", "status": 410, "destination": "/404" }
   ],
   "rewrites": [
     {
