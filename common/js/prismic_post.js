@@ -150,11 +150,12 @@ function renderContent(contentArray) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  // 1. pega o slug da URL “amigável” /blog/slug-do-post
-  //    ex.: '/blog/como-a-ia-pode-ajudar-seu-consultorio-a-crescer'
-  const pathParts = window.location.pathname.split('/');
-  // em pathParts = ["", "blog", "slug-do-post"] pegamos a última parte
-  const uid = pathParts[pathParts.length - 1] || '';
+  // tira eventual slash extra no fim e depois extrai o slug
+  const pathname = window.location.pathname.replace(/\/$/, '');
+  const parts = pathname.split('/');
+  //   ['/blog','meu-slug']
+  const uid = parts[parts.length - 1] || '';
+
   if (!uid) {
     const target = document.getElementById('content-1');
     if (target) target.textContent = 'Post não encontrado.';
