@@ -59,10 +59,10 @@ function render(posts) {
                 <a href="#0"><i class="fa-solid fa-tag mr-10 opacity-7"></i> ${tag}</a>
             </span>
             <h3>
-                <a href="blog/post.html?uid=${slug}">${title}</a>
+                <a href="blog/${slug}">${title}</a>
             </h3>
             <div class="text mt-25">
-                <a href="blog/post.html?uid=${slug}">
+                <a href="blog/${slug}">
                     <p>${description}</p>
                 </a>
             </div>
