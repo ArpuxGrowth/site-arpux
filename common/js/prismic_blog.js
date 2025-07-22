@@ -21,12 +21,11 @@ async function fetchPosts(ref) {
 function render(posts) {
     const container = document.getElementById('blog-posts')
     posts.forEach(doc => {
-    console.log('Dados do documento:', doc.data);
     
     const slug = doc.uid
     const title = doc.data.title[0].text || 'Título não encontrado.'
     const description = doc.data.description[0].text.slice(0, 320) + '…'
-    const tag = doc.data.tag[0].text
+    const tag = doc.data.tag && doc.data.tag.length > 0 ? doc.data.tag[0].text : 'Sem tag'
     const imgUrl = doc.data.cover_image?.url
     const date  = new Date(doc.data.date).toLocaleDateString('pt-BR')
 
