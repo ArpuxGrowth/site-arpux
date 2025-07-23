@@ -1957,6 +1957,17 @@ p {
   -webkit-filter: invert(0);
   filter: invert(0); }
 
+.pagination-style-01 .page-item .page-link { border: 0; padding:12px 5px; margin: 0 10px; background: transparent; color: #828282; min-width: 40px; text-align: center; border-radius: 100%; line-height: 1.25 }
+.pagination-style-01 .page-item:first-child .page-link, .pagination-style-01 .page-item:last-child .page-link { padding: 0; }
+.pagination-style-01 .page-item:last-child .page-link { margin-right: 0; }
+.pagination-style-01 .page-item:first-child .page-link:hover, .pagination-style-01 .page-item:last-child .page-link:hover { background: transparent; color: #232323; box-shadow: none }
+.pagination-style-01 .page-item .page-link:hover, .pagination-style-01 .page-item.active .page-link { background: #fff; color: #232323; box-shadow: 0 0 10px rgba(23,23,23,.15) }
+.pagination-style-01 .page-item:first-child .page-link { margin-left: 0; }
+
+.text-small { font-size:13px; line-height:22px; }
+
+.icon-extra-small { font-size:18px; }
+
 /* ====================== [ Start Responsive ] ====================== */
 @media screen and (max-width: 992px) {
   .sec-head .sub-head {

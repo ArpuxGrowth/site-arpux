@@ -2472,6 +2472,10 @@ img.left {
   .progress-wrap {
     display: none; } }
 
+@media screen and (max-width: 575px) {
+  .pagination-style-01 .page-item .page-link { margin: 0 5px; }
+}
+
 @media screen and (max-width: 480px) {
   .justify-end {
     -webkit-box-pack: start !important;
