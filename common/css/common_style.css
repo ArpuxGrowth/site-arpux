@@ -2326,6 +2326,55 @@ img.left {
   padding-left: 50px; }
 
 /* ====================== [ End Helper Classes  ] ====================== */
+
+/* --------------- Hubspot modal --------------- */
+.open-hubspot-form {
+  cursor: pointer;
+}
+
+.hs-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999999;
+}
+
+.hs-modal {
+  width: 94%;
+  max-width: 760px;
+  max-height: 90vh;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.hs-modal .hs-modal-close {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: transparent;
+  border: 0;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.hs-modal .hs-modal-header {
+  margin-bottom: 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.hs-modal .hs-modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
 /* ========= [ responsive ]  =========*/
 /* ====================== [ Start Responsive ] ====================== */
 @media screen and (max-width: 992px) {
@@ -2482,7 +2531,10 @@ img.left {
     -ms-flex-pack: start !important;
     justify-content: flex-start !important; }
   .load-text span {
-        font-size: 16px !important; } }
+        font-size: 16px !important; }
+  .hs-modal { overflow: auto; border-radius: 8px; }
+  .hs-modal .hs-modal-title { font-size: 16px; }
+}
 
 @media screen and (max-width: 444px) {
   .load-text span {
