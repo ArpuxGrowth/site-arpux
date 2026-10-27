@@ -3,10 +3,12 @@ const path = require("node:path");
 const { prismic, client, SITE_URL, postUrl, CACHE_CONTROL } = require("./_prismic");
 
 /**
- * Posts do Prismic em /blog/{uid} (rewrite no vercel.json). O corpo continua
- * sendo montado no navegador por common/js/prismic_post.js; aqui o <head> sai
- * pronto do servidor. Antes, todo post chegava ao Google com o título
- * "Carregando..." e a mesma meta description fixa do template.
+ * Posts do Prismic em /blog/{uid} (rewrite no vercel.json). O HTML sai pronto
+ * do servidor: <head> com título, descrição e canonical, e o corpo com a mesma
+ * marcação que common/js/prismic_post.js gera no navegador (que continua
+ * rodando e substitui pelo mesmo conteúdo). Antes, todo post chegava ao Google
+ * com o título "Carregando...", a mesma meta description fixa e o corpo vazio.
+ * Mudou a marcação lá? Mude `renderBody` aqui também.
  */
 
 const template = fs.readFileSync(path.join(process.cwd(), "blog/post.html"), "utf8");
@@ -27,8 +29,86 @@ const summary = (field, max = 155) => {
 
 const replaceOnce = (html, pattern, replacement) => {
   if (!pattern.test(html)) throw new Error(`post.html mudou: ${pattern} não encontrado`);
-  return html.replace(pattern, replacement);
+  return html.replace(pattern, () => replacement);
 };
+
+/** Mesmo HTML de renderContent() em prismic_post.js, com o texto escapado. */
+const renderContent = (blocks = []) => {
+  let html = "";
+  let inList = false;
+  for (const block of blocks) {
+    if (block.type === "list-item") {
+      if (!inList) {
+        html += '<ul class="rest unorder-list mb-30">';
+        inList = true;
+      }
+      html += `<li>${escapeHtml(block.text)}</li>`;
+      continue;
+    }
+    if (inList) {
+      html += "</ul>";
+      inList = false;
+    }
+    if (block.type === "paragraph") {
+      html += `<p class="text mb-20">${escapeHtml(block.text)}</p>`;
+    } else if (block.type.startsWith("heading")) {
+      const level = block.type.slice(-1);
+      html += `<h${level} class="title mb-30">${escapeHtml(block.text)}</h${level}>`;
+    } else if (block.type === "image") {
+      html += `<img src="${escapeHtml(block.url)}" alt="${escapeHtml(block.alt ?? "")}">`;
+    }
+  }
+  return inList ? `${html}</ul>` : html;
+};
+
+/** Preenche os contêineres vazios do post.html como renderPost() faz no navegador. */
+function renderBody(html, { data }, title, tag) {
+  const cover = data.cover_image?.url ?? "";
+  const dateText = prismic.asText(data.text_date) || "";
+  const header = `<header id="article-header" class="post-header pt-20">
+                    <div class="container-xl bg-img mt-80" style="background-image:url('${escapeHtml(cover)}');" data-overlay-dark="4">
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <div class="caption">
+                                    <div class="tags fz-14"><a href="#0">${escapeHtml(tag)}</a></div>
+                                    <h1 class="fz-55 mt-30">${escapeHtml(title)}</h1>
+                                </div>
+                                <div class="info d-flex mt-40 align-items-center">
+                                    <div class="left-info sm-mb30">
+                                        <div class="d-flex align-items-center">
+                                            <div class="author-info">
+                                                <div class="d-flex align-items-center">
+                                                    <a href="#0" class="circle-60"><img src="../startup_agency/assets/imgs/blogs/post/a1.jpg" alt="" class="circle-img"></a>
+                                                    <a href="#0" class="ml-20"><span class="opacity-7 mb-5">Autor</span><h6 class="fz-16">Arthur B</h6></a>
+                                                </div>
+                                            </div>
+                                            <div class="date ml-50">
+                                                <a href="#0"><span class="opacity-7 mb-5">Publicado</span><h6 class="fz-16">${escapeHtml(dateText)}</h6></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>`;
+  const images = [data.image_01?.url, data.image_02?.url].filter(Boolean);
+  const imageRow = images.length
+    ? `<div class="row">${images
+        .map(
+          (src, i) =>
+            `<div class="col-sm-6"><div class="iner-img${i === 0 ? " sm-mb30" : ""}"><img src="${escapeHtml(src)}" alt=""></div></div>`,
+        )
+        .join("")}</div>`
+    : "";
+
+  html = replaceOnce(html, /<header id="article-header"[^>]*>[\s\S]*?<\/header>/, header);
+  html = replaceOnce(html, /(<article id="content-1">)[\s\S]*?(<\/article>)/, `<article id="content-1">${renderContent(data.content_1)}</article>`);
+  html = replaceOnce(html, /(<div id="content-image"[^>]*>)\s*<!--[\s\S]*?-->\s*(<\/div>)/, `<div id="content-image" class="mb-50 mt-50">${imageRow}</div>`);
+  html = replaceOnce(html, /(<article id="content-2">)[\s\S]*?(<\/article>)/, `<article id="content-2">${renderContent(data.content_2)}</article>`);
+  html = replaceOnce(html, /<div id="article-tag">\s*<\/div>/, `<div id="article-tag"><a href="#">${escapeHtml(tag)}</a></div>`);
+  return html;
+}
 
 function render(doc) {
   const { data } = doc;
@@ -77,7 +157,7 @@ function render(doc) {
   );
   // As palavras-chave fixas eram de um único post; o Google ignora a tag, então sai.
   html = html.replace(/\s*<meta name="keywords" content="[^"]*">/, "");
-  return html;
+  return renderBody(html, doc, title, tag);
 }
 
 const notFound = () =>
