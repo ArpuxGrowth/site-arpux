@@ -1,8 +1,9 @@
 {
+  "functions": {
+    "api/post.js": { "includeFiles": "blog/post.html" }
+  },
   "rewrites": [
-    {
-      "source": "/blog/:slug*",
-      "destination": "/blog/post.html?uid=:slug*"
-    }
+    { "source": "/sitemap-blog.xml", "destination": "/api/sitemap-blog" },
+    { "source": "/blog/:slug*", "destination": "/api/post?uid=:slug*" }
   ]
 }

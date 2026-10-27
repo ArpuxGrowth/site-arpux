@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://arpux.com.br/sitemap.xml
+Sitemap: https://arpux.com.br/sitemap-blog.xml
