@@ -86,7 +86,11 @@
             region: region,
             portalId: portalId,
             formId: formId,
-            target: '#' + uniqueId
+            target: '#' + uniqueId,
+            // Conversão no PostHog (common/js/analytics.js escuta este evento).
+            onFormSubmitted: function () {
+              document.dispatchEvent(new CustomEvent('arpux:lead-submitted', { detail: { formId: formId } }));
+            }
           });
         } catch (err) {
           console.error('Erro ao criar o formulário HubSpot:', err);
